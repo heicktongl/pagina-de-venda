@@ -1,0 +1,8 @@
+{
+  "name": "HabitEng - Domine seu Ambiente",
+  "description": "Uma landing page de alta conversão para o ebook focado em engenharia de ambiente e comportamento humano para ir à academia sem depender de motivação.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
