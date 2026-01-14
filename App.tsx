@@ -2,57 +2,44 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Zap, 
-  Target, 
-  Clock, 
   ArrowRight, 
   CheckCircle2, 
   ShieldCheck, 
   Star,
-  Flame,
   Lock,
   Trophy,
-  Activity,
-  Cpu,
   Layers,
   Brain,
   MousePointer2,
   LockKeyhole,
-  ShieldAlert,
   BadgeCheck,
-  Timer
+  Timer,
+  Sparkles,
+  Loader2
 } from 'lucide-react';
+import { GeminiService } from './services/geminiService';
 
 const KIWIFY_LINK = "https://pay.kiwify.com.br/4kYhoIp?fbclid=PAVERFWAPRNzZleHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafK2svyJpDclp5P9F13Q-u7Qgeo426nHqR3EYbX2lI7eVD6Kcp2GycWXppebQ_aem_ZmFrZWR1bW15MTZieXRlcw";
 
-// Componente de Timer dinâmico para urgência
 const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 23,
-    minutes: 59,
-    seconds: 59
-  });
+  const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 59, seconds: 59 });
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         let { hours, minutes, seconds } = prev;
-        if (seconds > 0) {
-          seconds--;
-        } else {
+        if (seconds > 0) seconds--;
+        else {
           seconds = 59;
-          if (minutes > 0) {
-            minutes--;
-          } else {
+          if (minutes > 0) minutes--;
+          else {
             minutes = 59;
-            if (hours > 0) {
-              hours--;
-            }
+            if (hours > 0) hours--;
           }
         }
         return { hours, minutes, seconds };
       });
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
@@ -69,12 +56,52 @@ const CountdownTimer = () => {
   );
 };
 
+// Componente Interativo de IA para aumentar o engajamento
+const AIHabitInsight = () => {
+  const [insight, setInsight] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const gemini = GeminiService.getInstance();
+
+  const generateInsight = async () => {
+    setLoading(true);
+    try {
+      const result = await gemini.getHabitInsight("Dê uma dica curta e impactante de 2 frases sobre como projetar o quarto para evitar procrastinar ao acordar, focando em engenharia de ambiente.");
+      setInsight(result.text);
+    } catch (e) {
+      setInsight("Prepare seu ambiente hoje para que o amanhã seja automático. Deixe sua roupa de treino visível.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="bg-slate-900/50 border border-white/10 rounded-3xl p-6 mt-8">
+      <div className="flex items-center gap-3 mb-4">
+        <Sparkles className="text-green-400" size={20} />
+        <span className="text-[10px] font-black uppercase tracking-widest text-green-400">HabitEng AI Assistant</span>
+      </div>
+      {insight ? (
+        <p className="text-sm text-slate-300 italic mb-4 animate-in fade-in duration-700">"{insight}"</p>
+      ) : (
+        <p className="text-sm text-slate-500 italic mb-4">Quer uma amostra do poder da Engenharia de Ambiente?</p>
+      )}
+      <button 
+        onClick={generateInsight}
+        disabled={loading}
+        className="text-[10px] font-black uppercase tracking-widest text-white border border-white/20 px-4 py-2 rounded-xl hover:bg-white/10 transition flex items-center gap-2 disabled:opacity-50"
+      >
+        {loading ? <Loader2 size={12} className="animate-spin" /> : <Brain size={12} />}
+        {loading ? "Processando Biologia..." : "Gerar Insight Personalizado"}
+      </button>
+    </div>
+  );
+};
+
 export default function App() {
   return (
-    <div className="min-h-screen selection:bg-green-400 selection:text-slate-950">
-      {/* Hero Section - O Despertar do Desejo */}
+    <div className="min-h-screen selection:bg-green-400 selection:text-slate-950 bg-slate-950">
+      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center py-20 px-4 overflow-hidden">
-        {/* Background Neuro-Aesthetic */}
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&q=80&w=1920" 
@@ -83,7 +110,6 @@ export default function App() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/95 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
-          {/* Luz de Foco */}
           <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-green-500/10 blur-[150px] rounded-full animate-pulse"></div>
         </div>
 
@@ -99,7 +125,6 @@ export default function App() {
               Sua força de vontade é finita. O <strong>HabitEng</strong> é o sistema de design que elimina a necessidade de motivação, transformando a disciplina em um <span className="text-white font-black underline decoration-green-500 underline-offset-8">processo automático.</span>
             </p>
 
-            {/* Botão Neuro-Magnético */}
             <a 
               href={KIWIFY_LINK}
               target="_blank"
@@ -108,6 +133,8 @@ export default function App() {
             >
               INSTALAR PROTOCOLO AGORA <ArrowRight className="group-hover:translate-x-3 transition-transform duration-500" />
             </a>
+
+            <AIHabitInsight />
 
             <div className="mt-16 flex items-center gap-8 border-l-2 border-green-500/40 pl-8">
                <div className="flex -space-x-4">
@@ -142,7 +169,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Seção de Conflito Biológico (Dor e Solução) */}
+      {/* Dor & Conflito */}
       <section className="py-32 px-4 bg-slate-900/30 relative">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-28">
@@ -178,54 +205,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Seção de Autoridade - O Mecanismo */}
-      <section className="py-32 px-4 overflow-hidden bg-slate-950">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-24">
-          <div className="flex-1">
-            <h2 className="text-5xl md:text-7xl font-black mb-10 leading-[0.9] uppercase italic tracking-tighter">
-              A Ciência por trás do <br /><span className="text-green-400 italic">Sucesso Inevitável.</span>
-            </h2>
-            <div className="space-y-8">
-              {[
-                { t: "Configuração de Âncoras", d: "Transformamos objetos comuns em gatilhos neurológicos que disparam a vontade de agir." },
-                { t: "Arquitetura de Fluxo", d: "Criamos um corredor de atrito zero entre o seu trabalho e o primeiro peso da academia." },
-                { t: "Design de Recompensa", d: "Hackeamos o ciclo de feedback do cérebro para que a disciplina se sinta viciante." }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-6 items-start group">
-                  <div className="mt-1 flex-shrink-0 bg-green-400/10 p-2 rounded-lg text-green-400 border border-green-400/20 group-hover:rotate-12 transition-transform"><CheckCircle2 size={20} /></div>
-                  <div>
-                    <h4 className="text-lg font-black uppercase text-white tracking-tighter italic mb-1">{item.t}</h4>
-                    <p className="text-slate-500 font-medium text-base italic leading-snug">{item.d}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <a 
-              href={KIWIFY_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-button shimmer-effect animate-pulse-tempting inline-flex mt-16 text-slate-950 px-10 py-5 rounded-2xl font-black text-lg transition shadow-[0_20px_50px_rgba(74,222,128,0.3)] uppercase italic tracking-tighter"
-            >
-              ATIVAR MINHA NOVA BIOLOGIA
-            </a>
-          </div>
-          <div className="flex-1 relative group">
-            <div className="absolute -inset-4 bg-green-400/5 blur-3xl rounded-full animate-pulse"></div>
-            <div className="bg-slate-900 border border-white/10 p-3 rounded-[3.5rem] shadow-2xl overflow-hidden">
-               <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=800" className="rounded-[2.8rem] grayscale-50 opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition duration-1000" alt="Habit Engineering" />
-               <div className="p-8 flex items-center justify-between">
-                  <div>
-                    <p className="text-green-400 font-black text-2xl uppercase italic tracking-tighter">EFICIÊNCIA TOTAL</p>
-                    <p className="text-slate-500 font-bold uppercase text-[9px] tracking-widest opacity-60">Status: Sistema Impregnado</p>
-                  </div>
-                  <Trophy size={40} className="text-green-400 opacity-40 group-hover:opacity-100 transition-opacity" />
-               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Seção de Decisão Crítica - Oferta Irresistível */}
+      {/* Oferta Irresistível */}
       <section className="py-40 px-4 relative bg-slate-950">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="bg-green-400 text-slate-950 inline-flex items-center gap-4 px-8 py-3 rounded-full text-[10px] font-black mb-10 shadow-[0_0_30px_rgba(74,222,128,0.3)] border border-green-500/20 italic uppercase tracking-[0.2em]">
@@ -237,57 +217,26 @@ export default function App() {
           <h2 className="text-6xl md:text-[110px] font-black mb-12 uppercase italic leading-none tracking-tighter">O Upgrade <br /><span className="text-green-400">Definitivo.</span></h2>
           
           <div className="bg-slate-900/60 backdrop-blur-3xl border-2 border-green-400/30 p-10 md:p-20 rounded-[4rem] shadow-[0_40px_120px_rgba(34,197,94,0.25)] relative overflow-hidden">
-            {/* Elemento de Fundo Decorativo */}
-            <div className="absolute top-0 right-0 p-10 opacity-5">
-              <Zap size={200} className="text-green-400" />
-            </div>
-
             <div className="mb-14 relative z-10">
               <span className="text-slate-600 line-through text-2xl font-black opacity-50 italic tracking-tighter">R$ 97,00</span>
               <div className="flex items-center justify-center gap-2 mb-4 italic">
                 <span className="text-4xl font-black text-green-500">R$</span>
                 <span className="text-[120px] md:text-[150px] font-black text-white leading-none tracking-tighter">18<span className="text-5xl text-green-500">,80</span></span>
               </div>
-              <p className="text-slate-400 font-black uppercase tracking-[0.4em] text-[11px] italic mb-2">Um investimento único. Sem mensalidades.</p>
-              <p className="text-green-400/80 font-bold text-xs uppercase tracking-widest italic animate-pulse">Preço de café por uma vida de disciplina.</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-left mb-12 max-w-2xl mx-auto border-y border-white/5 py-10 relative z-10">
-              {[
-                "Framework HabitEng Completo",
-                "Guia de Design de Ambiente",
-                "Protocolo de Atrito Zero",
-                "Bônus: Comunidade de Elite"
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 group">
-                  <CheckCircle2 className="text-green-400 group-hover:scale-125 transition" size={18} />
-                  <span className="font-black text-[11px] uppercase tracking-widest text-slate-300 italic">{item}</span>
-                </div>
-              ))}
+              <p className="text-slate-400 font-black uppercase tracking-[0.4em] text-[11px] italic mb-2">Investimento único. Acesso vitalício.</p>
             </div>
 
             <a 
               href={KIWIFY_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="cta-button shimmer-effect animate-pulse-tempting flex w-full text-slate-950 py-8 rounded-[2.5rem] text-2xl font-black items-center justify-center transition shadow-[0_20px_60px_rgba(74,222,128,0.5)] uppercase italic tracking-tighter hover:scale-[1.02] active:scale-95"
+              className="cta-button shimmer-effect animate-pulse-tempting flex w-full text-slate-950 py-8 rounded-[2.5rem] text-2xl font-black items-center justify-center transition shadow-[0_20px_60px_rgba(74,222,128,0.5)] uppercase italic tracking-tighter"
             >
-              BAIXAR PROTOCOLO IMEDIATAMENTE
+              BAIXAR PROTOCOLO AGORA
             </a>
-            
-            <div className="mt-14 flex flex-wrap items-center justify-center gap-10 opacity-50">
-               <div className="flex items-center gap-2">
-                  <Lock size={16} className="text-green-400" /> <span className="text-[9px] font-black uppercase tracking-[0.3em] italic">Transação 100% Criptografada</span>
-               </div>
-               <div className="flex items-center gap-5 grayscale brightness-150">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Pix_logo.svg" alt="Pix" className="h-5" />
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-3" />
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg" alt="Mastercard" className="h-7" />
-               </div>
-            </div>
           </div>
           
-          {/* Seção de Garantia Blindada - O Selo de Risco Zero */}
+          {/* Garantia Aprimorada */}
           <div className="mt-20 p-10 md:p-16 border-2 border-dashed border-white/10 rounded-[3.5rem] bg-slate-900/40 relative overflow-hidden group">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-green-400/5 blur-[60px] rounded-full group-hover:bg-green-400/10 transition duration-1000"></div>
             
@@ -306,10 +255,7 @@ export default function App() {
                 </p>
                 <div className="h-px w-24 bg-green-500/30 mx-auto my-6"></div>
                 <p className="text-slate-500 font-black uppercase text-[10px] tracking-[0.4em] leading-relaxed max-w-lg mx-auto">
-                  Se você não sentir que sua rotina ficou instantaneamente mais simples e fluida, basta um único e-mail para receber <span className="text-green-400">100% do seu investimento de volta</span>. Sem perguntas, sem letras miúdas, sem atrito.
-                </p>
-                <p className="text-[9px] text-green-500/60 font-black uppercase tracking-[0.2em] mt-6 italic">
-                   Risco Total sob nossa responsabilidade | Processamento Seguro Via Kiwify
+                  Se você não sentir que sua rotina ficou instantaneamente mais simples, basta um e-mail para receber <span className="text-green-400">100% do seu dinheiro de volta</span>. Sem perguntas.
                 </p>
               </div>
             </div>
@@ -317,57 +263,17 @@ export default function App() {
         </div>
       </section>
 
-      {/* Prova Social de Alta Autoridade */}
-      <section className="py-32 px-4 bg-slate-950 border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-black text-center mb-24 uppercase italic tracking-tighter leading-none italic">Resultados <span className="text-green-400">Mensuráveis.</span></h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: "Lucas M.", role: "Advogado Sênior", text: "O HabitEng mudou meu jogo. Não gasto mais força de vontade para ir treinar, o ambiente faz isso por mim." },
-              { name: "Carolina V.", role: "Founder & CEO", text: "Simples, direto e altamente eficaz. É engenharia pura aplicada ao comportamento humano." },
-              { name: "Gabriel S.", role: "Engenheiro", text: "Eliminei a fricção e hoje treino no piloto automático. O investimento mais inteligente do meu ano." }
-            ].map((item, i) => (
-              <div key={i} className="bg-slate-900/20 p-10 rounded-[3rem] border border-white/5 hover:bg-slate-900/40 transition-all duration-700 shadow-xl">
-                <div className="flex gap-1 text-green-400 mb-6">
-                  {[...Array(5)].map((_, j) => <Star key={j} size={14} fill="currentColor" />)}
-                </div>
-                <p className="text-slate-300 italic mb-10 leading-relaxed font-medium text-base opacity-90">"{item.text}"</p>
-                <div className="flex items-center gap-4 border-t border-white/5 pt-8">
-                  <div className="w-12 h-12 bg-slate-800 rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                    <img src={`https://i.pravatar.cc/150?u=user${i+10}`} alt={item.name} className="grayscale brightness-110" />
-                  </div>
-                  <div>
-                    <div className="font-black text-white uppercase text-xs tracking-widest italic">{item.name}</div>
-                    <div className="text-[9px] text-green-500 font-black uppercase tracking-[0.2em]">{item.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Footer Minimalista e Autoritário */}
+      {/* Footer */}
       <footer className="py-20 px-4 bg-slate-950 border-t border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-center md:justify-start gap-3">
-              <Zap className="text-green-400 fill-green-400" size={28} />
-              <span className="font-outfit font-black text-xl tracking-tighter uppercase italic">Habit<span className="text-green-400">Eng</span> Systems</span>
-            </div>
-            <p className="text-slate-600 text-[10px] max-w-xs font-black uppercase tracking-[0.2em] italic">
-              Performance Humana por Design. Todos os direitos reservados.
-            </p>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="flex items-center gap-3">
+            <Zap className="text-green-400 fill-green-400" size={28} />
+            <span className="font-outfit font-black text-xl tracking-tighter uppercase italic">Habit<span className="text-green-400">Eng</span> Systems</span>
           </div>
-          <div className="flex flex-col items-center md:items-end gap-6">
-             <div className="flex flex-wrap justify-center gap-8 text-slate-500 text-[9px] font-black uppercase tracking-[0.4em] italic">
-              <a href="#" className="hover:text-green-400 transition">Políticas</a>
-              <a href="#" className="hover:text-green-400 transition">Privacidade</a>
-              <a href="#" className="hover:text-green-400 transition">Suporte VIP</a>
-            </div>
-            <p className="text-slate-800 text-[9px] font-black uppercase tracking-[0.5em] italic">
-              © 2025 HabitEng Lab. Desenvolvido para Vencedores.
-            </p>
+          <div className="flex flex-wrap justify-center gap-8 text-slate-500 text-[9px] font-black uppercase tracking-[0.4em] italic">
+            <a href="#" className="hover:text-green-400 transition">Políticas</a>
+            <a href="#" className="hover:text-green-400 transition">Privacidade</a>
+            <a href="#" className="hover:text-green-400 transition">Suporte VIP</a>
           </div>
         </div>
       </footer>

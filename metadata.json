@@ -1,8 +1,10 @@
 {
-  "name": "HabitEng - Domine seu Ambiente",
-  "description": "Uma landing page de alta conversão para o ebook focado em engenharia de ambiente e comportamento humano para ir à academia sem depender de motivação.",
+  "name": "HabitEng - O Sistema de Atrito Zero",
+  "description": "Engenharia de ambiente e psicologia comportamental aplicada para disciplina automática.",
   "requestFramePermissions": [
     "camera",
     "microphone"
-  ]
+  ],
+  "author": "HabitEng Lab",
+  "version": "1.1.0"
 }
