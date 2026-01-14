@@ -48,15 +48,14 @@ const CountdownTimer = () => {
   return (
     <div className="flex items-center gap-1 font-mono font-black text-slate-950">
       <span className="animate-glitch inline-block">{format(timeLeft.hours)}</span>
-      <span className="opacity-50">:</span>
+      <span className="opacity-50 text-slate-900">:</span>
       <span className="animate-glitch inline-block">{format(timeLeft.minutes)}</span>
-      <span className="opacity-50">:</span>
+      <span className="opacity-50 text-slate-900">:</span>
       <span className="animate-glitch inline-block">{format(timeLeft.seconds)}</span>
     </div>
   );
 };
 
-// Componente Interativo de IA para aumentar o engajamento
 const AIHabitInsight = () => {
   const [insight, setInsight] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -104,9 +103,11 @@ export default function App() {
       <section className="relative min-h-screen flex items-center py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&q=80&w=1920" 
+            src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format,compress&fit=crop&q=60&w=1920&fm=webp" 
             alt="Ambiente de Alta Performance" 
             className="w-full h-full object-cover opacity-20 grayscale brightness-50"
+            width="1920"
+            height="1080"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/95 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
@@ -139,7 +140,7 @@ export default function App() {
             <div className="mt-16 flex items-center gap-8 border-l-2 border-green-500/40 pl-8">
                <div className="flex -space-x-4">
                  {[1,2,3,4,5].map(i => (
-                   <img key={i} src={`https://i.pravatar.cc/150?u=tech${i}`} className="w-12 h-12 rounded-full border-2 border-slate-950 grayscale hover:grayscale-0 transition duration-500 cursor-pointer" alt="Membro" />
+                   <img key={i} src={`https://i.pravatar.cc/96?u=tech${i}`} className="w-12 h-12 rounded-full border-2 border-slate-950 grayscale hover:grayscale-0 transition duration-500 cursor-pointer" alt="Membro" width="48" height="48" />
                  ))}
                </div>
                <div>
@@ -153,9 +154,11 @@ export default function App() {
             <div className="absolute -inset-10 bg-green-500/20 blur-[120px] rounded-full opacity-30 group-hover:opacity-50 transition duration-1000"></div>
             <div className="relative rounded-[3.5rem] overflow-hidden border border-white/10 shadow-2xl">
               <img 
-                src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&w=1000" 
+                src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format,compress&fit=crop&q=60&w=800&fm=webp" 
                 alt="Alta Performance Visual" 
                 className="w-full h-auto brightness-90 group-hover:scale-105 transition duration-[2s]"
+                width="800"
+                height="800"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
               <div className="absolute bottom-10 left-10 flex flex-col gap-2">
@@ -211,7 +214,7 @@ export default function App() {
           <div className="bg-green-400 text-slate-950 inline-flex items-center gap-4 px-8 py-3 rounded-full text-[10px] font-black mb-10 shadow-[0_0_30px_rgba(74,222,128,0.3)] border border-green-500/20 italic uppercase tracking-[0.2em]">
             <span className="flex items-center gap-2"><Timer size={14} /> EXPIRA EM:</span>
             <CountdownTimer />
-            <span className="bg-slate-950/20 px-2 py-0.5 rounded ml-2">80% OFF</span>
+            <span className="bg-slate-950/20 px-2 py-0.5 rounded ml-2 font-bold">80% OFF</span>
           </div>
           
           <h2 className="text-6xl md:text-[110px] font-black mb-12 uppercase italic leading-none tracking-tighter">O Upgrade <br /><span className="text-green-400">Definitivo.</span></h2>
