@@ -1,10 +1,10 @@
 {
-  "name": "HabitEng - O Sistema de Atrito Zero",
-  "description": "Engenharia de ambiente e psicologia comportamental aplicada para disciplina automática.",
+  "name": "HabitEng - Engenharia de Hábitos",
+  "description": "Plataforma de alta performance baseada em psicologia comportamental para transformar rotinas e saúde.",
   "requestFramePermissions": [
     "camera",
     "microphone"
   ],
-  "author": "HabitEng Lab",
+  "author": "HabitEng Labs",
   "version": "1.1.0"
 }
