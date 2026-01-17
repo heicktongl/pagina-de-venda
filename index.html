@@ -16,14 +16,14 @@
     <meta property="og:url" content="https://habiteng.com.br/">
     <meta property="og:title" content="HabitEng - O Sistema de Atrito Zero">
     <meta property="og:description" content="Hackeie seu cérebro e seu ambiente. Ative a disciplina automática em 120 segundos.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&w=1200">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format,compress&fit=crop&q=60&w=1200&fm=webp">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://habiteng.com.br/">
     <meta property="twitter:title" content="HabitEng - O Sistema de Atrito Zero">
     <meta property="twitter:description" content="Pare de depender de motivação. Instale o protocolo HabitEng hoje.">
-    <meta property="twitter:image" content="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&w=1200">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format,compress&fit=crop&q=60&w=1200&fm=webp">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,6 +54,12 @@
           86% { transform: translate(0); opacity: 0.9; }
         }
 
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+
         .animate-glitch { animation: glitch 2.5s cubic-bezier(.25,.46,.45,.94) infinite; }
         .animate-pulse-tempting { animation: pulse-tempting 3s infinite ease-in-out; }
         .shimmer-effect {
@@ -70,20 +76,21 @@
         .cta-button:hover { filter: brightness(1.1); transform: translateY(-4px); }
         .cta-button:active { transform: translateY(0); }
     </style>
-
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@^19.2.3",
-        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-        "react/": "https://esm.sh/react@^19.2.3/",
-        "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
-        "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
-      }
-    }
-    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
 </head>
 <body class="bg-slate-950 text-slate-200 selection:bg-green-400 selection:text-slate-950">
     <div id="root"></div>
+    <!-- Script de entrada principal para o ambiente de build -->
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>
