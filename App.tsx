@@ -46,12 +46,12 @@ const CountdownTimer = () => {
   const format = (num: number) => num.toString().padStart(2, '0');
 
   return (
-    <div className="flex items-center gap-1 font-mono font-black text-slate-950">
-      <span className="animate-glitch inline-block">{format(timeLeft.hours)}</span>
-      <span className="opacity-50 text-slate-900">:</span>
-      <span className="animate-glitch inline-block">{format(timeLeft.minutes)}</span>
-      <span className="opacity-50 text-slate-900">:</span>
-      <span className="animate-glitch inline-block">{format(timeLeft.seconds)}</span>
+    <div className="flex items-center gap-1 font-mono font-black text-slate-950 text-2xl md:text-4xl tracking-tighter">
+      <span className="animate-glitch inline-block bg-slate-950/5 px-1 rounded">{format(timeLeft.hours)}</span>
+      <span className="opacity-30 text-slate-900 animate-pulse">:</span>
+      <span className="animate-glitch inline-block bg-slate-950/5 px-1 rounded">{format(timeLeft.minutes)}</span>
+      <span className="opacity-30 text-slate-900 animate-pulse">:</span>
+      <span className="animate-glitch inline-block bg-slate-950/5 px-1 rounded">{format(timeLeft.seconds)}</span>
     </div>
   );
 };
@@ -211,10 +211,15 @@ export default function App() {
       {/* Oferta Irresistível */}
       <section className="py-40 px-4 relative bg-slate-950">
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="bg-green-400 text-slate-950 inline-flex items-center gap-4 px-8 py-3 rounded-full text-[10px] font-black mb-10 shadow-[0_0_30px_rgba(74,222,128,0.3)] border border-green-500/20 italic uppercase tracking-[0.2em]">
-            <span className="flex items-center gap-2"><Timer size={14} /> EXPIRA EM:</span>
+          <div className="bg-green-400 text-slate-950 inline-flex flex-col md:flex-row items-center gap-6 px-10 py-8 rounded-[3rem] mb-12 shadow-[0_0_50px_rgba(74,222,128,0.25)] border-2 border-green-500/40 italic uppercase">
+            <div className="flex items-center gap-3 font-black text-sm tracking-widest text-slate-900">
+              <Timer size={24} className="animate-spin-slow" /> 
+              <span>OFERTA EXPIRA EM:</span>
+            </div>
             <CountdownTimer />
-            <span className="bg-slate-950/20 px-2 py-0.5 rounded ml-2 font-bold">80% OFF</span>
+            <div className="bg-slate-950 text-green-400 px-6 py-2 rounded-full font-black text-xl shadow-lg">
+              80% OFF
+            </div>
           </div>
           
           <h2 className="text-6xl md:text-[110px] font-black mb-12 uppercase italic leading-none tracking-tighter">O Upgrade <br /><span className="text-green-400">Definitivo.</span></h2>
